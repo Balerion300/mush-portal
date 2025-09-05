@@ -208,6 +208,7 @@ class Client {
       upload: null,
       backup: null,
       configure: null,
+      formEditor: null,
       spawns: [],
     };
     
@@ -642,6 +643,11 @@ class Client {
       this.output.calcDimensions();
       //this.sendText("SCREENWIDTH " + this.settings.terminalWidth);
       //this.sendText("SCREENHEIGHT " + Math.floor(this.output.root.parentNode.clientHeight / this.output.dims.height));
+    } else if (key === 'darkTheme') {
+      const theme = `ace/theme/${this.settings.darkTheme ? 'mush-dark' : 'mush-light'}`;
+      this.react.upload && this.react.upload.editor.current.editor.setTheme(theme);
+      this.react.backup && this.react.backup.editor.current.editor.setTheme(theme);
+      this.react.formEditor && this.react.formEditor.editor.current.editor.setTheme(theme);
     } else if (key === 'timersEnabled') {
       if (this.settings[key]) {
         this.startTimers();

@@ -155,11 +155,13 @@ class FormEditor extends React.Component {
     const { panel } = this.props;
     panel.options.resizeit.resize = this.onResize;
     window.client.panels.resizeit(panel, panel.options.resizeit);
+    window.client.react.formEditor = this;
   }
-  
+
   componentWillUnmount() {
     this.props.panel.options.resizeit.resize = null;
     clearTimeout(this.clearStatus);
+    window.client.react.formEditor = null;
   }
 
   static getDerivedStateFromProps(props, state) {

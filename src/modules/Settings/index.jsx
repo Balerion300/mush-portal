@@ -194,7 +194,8 @@ class Settings extends React.Component {
       historySize, historySpawnSize, mobileHideTaskbar, mobileHideStatusbar, allowServerChange, activityDelay,
       sidebarOpen, sidebarAnchor, sidebarAlwaysShow, sidebarShowPlayers, fontFamily, fontSize, activityReposition,
       recallButtons, recallAnchor, recallSize, mobileFontSize, terminalWidth, timersAutoStart, activityEnabled,
-      sidebarShowThings, sidebarShowExits, sidebarShowCompass, sidebarDense, timersEnabled, terminalAutoScroll, darkTheme } = this.state;
+      sidebarShowThings, sidebarShowExits, sidebarShowCompass, sidebarDense, timersEnabled, terminalAutoScroll,
+      showLocalEcho, darkTheme } = this.state;
     const isMobile = window.client.mobile;
    
     var debugging = (
@@ -317,6 +318,16 @@ class Settings extends React.Component {
           <ListItemText className={classes.switchText} primary="Scroll to bottom on command input?" />
           <ListItemSecondaryAction>
             <Switch checked={terminalAutoScroll} value="terminalAutoScroll" onChange={this.handleSwitch('terminalAutoScroll')} />
+          </ListItemSecondaryAction>
+        </ListItem>
+
+        <ListItem dense>
+          <ListItemIcon>
+            <ShortTextIcon />
+          </ListItemIcon>
+          <ListItemText className={classes.switchText} primary="Show commands in output?" />
+          <ListItemSecondaryAction>
+            <Switch checked={showLocalEcho} value="showLocalEcho" onChange={this.handleSwitch('showLocalEcho')} />
           </ListItemSecondaryAction>
         </ListItem>
       </List>

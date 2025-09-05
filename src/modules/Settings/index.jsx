@@ -334,6 +334,20 @@ class Settings extends React.Component {
       </List>
     );
         
+    var editorTheme = (
+      <List className={classes.list} disablePadding dense>
+        <ListItem dense>
+          <ListItemIcon>
+            <CodeIcon />
+          </ListItemIcon>
+          <ListItemText className={classes.switchText} primary="Use dark code editor theme?" />
+          <ListItemSecondaryAction>
+            <Switch checked={darkTheme} value="darkTheme" onChange={this.handleSwitch('darkTheme')} />
+          </ListItemSecondaryAction>
+        </ListItem>
+      </List>
+    );
+
     var font = (
       <List className={classes.list} disablePadding dense>
         <ListItem dense>
@@ -379,21 +393,7 @@ class Settings extends React.Component {
         </ListItem>
       </List>
     );
-
-    var editorTheme = (
-      <List className={classes.list} disablePadding dense>
-        <ListItem dense>
-          <ListItemIcon>
-            <CodeIcon />
-          </ListItemIcon>
-          <ListItemText className={classes.switchText} primary="Use dark code editor theme?" />
-          <ListItemSecondaryAction>
-            <Switch checked={darkTheme} value="darkTheme" onChange={this.handleSwitch('darkTheme')} />
-          </ListItemSecondaryAction>
-        </ListItem>
-      </List>
-    );
-
+    
     var upload = (
       <List className={classes.list} disablePadding dense>
         <ListItem dense>

@@ -20,8 +20,7 @@ import CancelIcon from '@material-ui/icons/Cancel';
 
 //import AceEditor from 'react-ace';
 //import 'brace/mode/mushcode';
-//import '../../ace/theme-mush-dark';
-//import '../../ace/theme-mush-light';
+//import 'brace/theme/tomorrow_night_bright';
 
 
 //////////////////////////////////////////////////////////////////////
@@ -260,7 +259,7 @@ class BBPost extends React.Component {
             ref={this.editor}
             mode="mushcode"
             width="100%"
-            theme={window.client.settings.darkTheme ? 'mush-dark' : 'mush-light'}
+            theme="tomorrow_night_bright"
             value={body}
             onChange={this.changeText}
             wrapEnabled={true}

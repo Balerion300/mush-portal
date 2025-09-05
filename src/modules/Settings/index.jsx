@@ -194,7 +194,6 @@ class Settings extends React.Component {
       historySize, historySpawnSize, mobileHideTaskbar, mobileHideStatusbar, allowServerChange, activityDelay,
       sidebarOpen, sidebarAnchor, sidebarAlwaysShow, sidebarShowPlayers, fontFamily, fontSize, activityReposition,
       recallButtons, recallAnchor, recallSize, mobileFontSize, terminalWidth, timersAutoStart, activityEnabled,
-
       sidebarShowThings, sidebarShowExits, sidebarShowCompass, sidebarDense,
       timersEnabled, terminalAutoScroll, showLocalEcho, darkTheme
     } = this.state;

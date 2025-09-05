@@ -1,3 +1,4 @@
+/* global ace */
 ace.define("ace/theme/mush-light",[
   "require",
   "exports",

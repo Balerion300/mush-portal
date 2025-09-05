@@ -19,7 +19,8 @@ import AceEditor from 'react-ace';
 import 'brace/mode/mushcode';
 import 'brace/mode/javascript';
 import 'brace/mode/css';
-import 'brace/theme/tomorrow_night_bright';
+import '../../ace/theme-mush-dark';
+import '../../ace/theme-mush-light';
 
 
 //////////////////////////////////////////////////////////////////////
@@ -154,11 +155,13 @@ class FormEditor extends React.Component {
     const { panel } = this.props;
     panel.options.resizeit.resize = this.onResize;
     window.client.panels.resizeit(panel, panel.options.resizeit);
+    window.client.react.formEditor = this;
   }
-  
+
   componentWillUnmount() {
     this.props.panel.options.resizeit.resize = null;
     clearTimeout(this.clearStatus);
+    window.client.react.formEditor = null;
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -436,7 +439,7 @@ class FormEditor extends React.Component {
                 className={classes.editor}
                 ref={this.editor}
                 mode={mode ? rtype.toLowerCase() : ltype.toLowerCase()}
-                theme="tomorrow_night_bright"
+                theme={window.client.settings.darkTheme ? 'mush-dark' : 'mush-light'}
                 value={item.text}
                 onChange={this.changeText}
                 wrapEnabled={!window.client.mobile}

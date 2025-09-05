@@ -13,7 +13,8 @@ import UndoIcon from '@material-ui/icons/Redo';
 
 import AceEditor from 'react-ace';
 import 'brace/mode/mushcode';
-import 'brace/theme/tomorrow_night_bright';
+import '../../ace/theme-mush-dark';
+import '../../ace/theme-mush-light';
 
 //////////////////////////////////////////////////////////////////////
 
@@ -173,7 +174,7 @@ class Upload extends React.Component {
           ref={this.editor}
           mode="mushcode"
           width="100%"
-          theme="tomorrow_night_bright"
+          theme={window.client.settings.darkTheme ? 'mush-dark' : 'mush-light'}
           value={text}
           onChange={this.changeText}
           readOnly={uploading}

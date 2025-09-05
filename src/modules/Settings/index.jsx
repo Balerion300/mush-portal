@@ -194,7 +194,9 @@ class Settings extends React.Component {
       historySize, historySpawnSize, mobileHideTaskbar, mobileHideStatusbar, allowServerChange, activityDelay,
       sidebarOpen, sidebarAnchor, sidebarAlwaysShow, sidebarShowPlayers, fontFamily, fontSize, activityReposition,
       recallButtons, recallAnchor, recallSize, mobileFontSize, terminalWidth, timersAutoStart, activityEnabled,
-      sidebarShowThings, sidebarShowExits, sidebarShowCompass, sidebarDense, timersEnabled, terminalAutoScroll } = this.state;
+      sidebarShowThings, sidebarShowExits, sidebarShowCompass, sidebarDense,
+      timersEnabled, terminalAutoScroll, showLocalEcho, darkTheme
+    } = this.state;
     const isMobile = window.client.mobile;
    
     var debugging = (
@@ -319,9 +321,33 @@ class Settings extends React.Component {
             <Switch checked={terminalAutoScroll} value="terminalAutoScroll" onChange={this.handleSwitch('terminalAutoScroll')} />
           </ListItemSecondaryAction>
         </ListItem>
+
+        <ListItem dense>
+          <ListItemIcon>
+            <ShortTextIcon />
+          </ListItemIcon>
+          <ListItemText className={classes.switchText} primary="Show commands in output?" />
+          <ListItemSecondaryAction>
+            <Switch checked={showLocalEcho} value="showLocalEcho" onChange={this.handleSwitch('showLocalEcho')} />
+          </ListItemSecondaryAction>
+        </ListItem>
       </List>
     );
         
+    var editorTheme = (
+      <List className={classes.list} disablePadding dense>
+        <ListItem dense>
+          <ListItemIcon>
+            <CodeIcon />
+          </ListItemIcon>
+          <ListItemText className={classes.switchText} primary="Use dark code editor theme?" />
+          <ListItemSecondaryAction>
+            <Switch checked={darkTheme} value="darkTheme" onChange={this.handleSwitch('darkTheme')} />
+          </ListItemSecondaryAction>
+        </ListItem>
+      </List>
+    );
+
     var font = (
       <List className={classes.list} disablePadding dense>
         <ListItem dense>
@@ -659,6 +685,15 @@ class Settings extends React.Component {
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails classes={{ root: classes.noPadding }}>
                   {color}
+                </ExpansionPanelDetails>
+              </ExpansionPanel>
+
+              <ExpansionPanel className={classes.panel} expanded={expandAll || expanded === 'editorTheme'} onChange={this.handleExpand('editorTheme')}>
+                <ExpansionPanelSummary classes={{ root: classes.noPadding }} expandIcon={<ExpandMoreIcon />}>
+                  <Typography className={classes.summaryText}>Code Editor Theme</Typography>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails classes={{ root: classes.noPadding }}>
+                  {editorTheme}
                 </ExpansionPanelDetails>
               </ExpansionPanel>
 

@@ -7,6 +7,59 @@ class Connection {
   static get CHANNEL_PUEBLO() { return 'p'; }
   static get CHANNEL_PROMPT() { return '>'; }
 
+  // Encode a string into Latin-1 bytes.
+  static encodeLatin1(str) {
+    const buf = new Uint8Array(str.length);
+    for (let i = 0; i < str.length; i++) {
+      buf[i] = str.charCodeAt(i) & 0xFF;
+    }
+    return buf;
+  }
+
+  // Decode Latin-1 bytes into a string.
+  static decodeLatin1(buf) {
+    let s = '';
+    for (let i = 0; i < buf.length; i++) {
+      s += String.fromCharCode(buf[i]);
+    }
+    return s;
+  }
+
+  // Strip Telnet control sequences and optionally respond to them.
+  static filterTelnet(bytes, socket) {
+    const out = [];
+    for (let i = 0; i < bytes.length; i++) {
+      const b = bytes[i];
+      if (b === 255) { // IAC
+        const cmd = bytes[++i];
+        if (cmd === 255) {
+          out.push(255); // Escaped 0xFF
+        } else if (cmd === 250) { // SB ... SE
+          while (i < bytes.length && !(bytes[i] === 255 && bytes[i + 1] === 240)) {
+            i++;
+          }
+          i++; // skip SE
+        } else if (cmd === 251 || cmd === 252 || cmd === 253 || cmd === 254) {
+          const opt = bytes[++i];
+          let resp = null;
+          if (cmd === 253) { // DO
+            resp = 252; // WONT
+          } else if (cmd === 251) { // WILL
+            resp = 254; // DONT
+          }
+          if (resp !== null && socket && socket.readyState === 1) {
+            socket.send(new Uint8Array([255, resp, opt]));
+          }
+        } else {
+          // ignore other commands
+        }
+      } else {
+        out.push(b);
+      }
+    }
+    return new Uint8Array(out);
+  }
+
   constructor(url) {
     this.url = url;
     this.socket = null;
@@ -44,7 +97,16 @@ class Connection {
   }
 
   static onmessage(that, evt) {
-    that.onMessage && that.onMessage(evt.data[0], evt.data.substring(1));
+    // Handle raw telnet bytes from the server.
+    let data = evt.data;
+    if (!(data instanceof ArrayBuffer)) {
+      data = (new TextEncoder()).encode(String(data)).buffer;
+    }
+    const bytes = new Uint8Array(data);
+    const filtered = Connection.filterTelnet(bytes, that.socket);
+    const text = Connection.decodeLatin1(filtered);
+
+    that.onMessage && that.onMessage(Connection.CHANNEL_TEXT, text);
   }
 
   reconnect(url=null) {
@@ -57,8 +119,9 @@ class Connection {
     
     this.url = url || this.url;
     
-    this.socket = new window.WebSocket(this.url);
+    this.socket = new window.WebSocket(this.url, ['binary']);
     this.isOpen = false;
+    this.socket.binaryType = 'arraybuffer';
 
     this.socket.onopen = function (evt) {
       Connection.onopen(that, evt);
@@ -86,7 +149,10 @@ class Connection {
   }
 
   sendText(data) {
-    this.isConnected() && this.socket.send(Connection.CHANNEL_TEXT + data + '\r\n');
+    if (this.isConnected()) {
+      const buf = Connection.encodeLatin1(data + '\r\n');
+      this.socket.send(buf);
+    }
   }
 
   sendObject(data) {

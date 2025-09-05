@@ -19,7 +19,8 @@ import AceEditor from 'react-ace';
 import 'brace/mode/mushcode';
 import 'brace/mode/javascript';
 import 'brace/mode/css';
-import 'brace/theme/tomorrow_night_bright';
+import '../../ace/theme-mush-dark';
+import '../../ace/theme-mush-light';
 
 
 //////////////////////////////////////////////////////////////////////
@@ -436,7 +437,7 @@ class FormEditor extends React.Component {
                 className={classes.editor}
                 ref={this.editor}
                 mode={mode ? rtype.toLowerCase() : ltype.toLowerCase()}
-                theme="tomorrow_night_bright"
+                theme={window.client.settings.darkTheme ? 'mush-dark' : 'mush-light'}
                 value={item.text}
                 onChange={this.changeText}
                 wrapEnabled={!window.client.mobile}

@@ -708,7 +708,7 @@ Connect to the game server and setup message handlers.
 <a name="Client+sendCommand"></a>
 
 ### client.sendCommand(cmd)
-Send a command string to the server, check macros for a match and append a local echo.
+Send a command string to the server, check macros for a match and append a local echo when enabled.
 
 **Kind**: instance method of [<code>Client</code>](#Client)  
 

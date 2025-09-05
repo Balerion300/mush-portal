@@ -77,6 +77,7 @@ The _MUSH Portal_ website at <http://www.mushportal.com> connects to _grapenut's
 >   - Terminal font, font size, and word wrapping width.
 >   - Default ANSI background/foreground colors and invert black/white color scheme.
 >   - Command recall size and output history size.
+>   - Toggle local echo for sent commands.
 >   - Sidebar size, position, contents, and navigation compass.
 >   - @decompile/tf multiple attributes directly to the command upload editor.
 >   - Dev console output for debugging user-defined Javascript and MUSH events.

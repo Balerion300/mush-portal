@@ -98,9 +98,12 @@ class Client {
       ansiFG: 'ansi-37',
       ansiBG: 'ansi-40',
       invertHighlight: false,
+      // code editor theme
+      darkTheme: true,
       // terminal settings
       terminalWidth: 100,
       terminalAutoScroll: true,
+      showLocalEcho: true,
       // upload editor
       decompileEditor: true,
       decompileKey: 'FugueEdit > ',
@@ -1435,7 +1438,9 @@ class Client {
 
     cmd = this.filterUnicode(cmd);
     this.sendMacro(cmd);
-    this.scrollIfNeeded(() => this.appendMessage('localEcho', cmd));
+    if (this.settings.showLocalEcho) {
+      this.scrollIfNeeded(() => this.appendMessage('localEcho', cmd));
+    }
     this.saveRecallHistory();
   }
   

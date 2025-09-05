@@ -98,6 +98,8 @@ class Client {
       ansiFG: 'ansi-37',
       ansiBG: 'ansi-40',
       invertHighlight: false,
+      // code editor theme
+      darkTheme: true,
       // terminal settings
       terminalWidth: 100,
       terminalAutoScroll: true,

@@ -20,7 +20,8 @@ import ChipInput from 'material-ui-chip-input';
 
 //import AceEditor from 'react-ace';
 //import 'brace/mode/mushcode';
-//import 'brace/theme/tomorrow_night_bright';
+//import '../../ace/theme-mush-dark';
+//import '../../ace/theme-mush-light';
 
 
 //////////////////////////////////////////////////////////////////////
@@ -254,7 +255,7 @@ class Sendmail extends React.Component {
             ref={this.editor}
             mode="mushcode"
             width="100%"
-            theme="tomorrow_night_bright"
+            theme={window.client.settings.darkTheme ? 'mush-dark' : 'mush-light'}
             value={body}
             onChange={this.changeText}
             wrapEnabled={true}

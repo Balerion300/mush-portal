@@ -439,7 +439,7 @@ class FormEditor extends React.Component {
                 className={classes.editor}
                 ref={this.editor}
                 mode={mode ? rtype.toLowerCase() : ltype.toLowerCase()}
-                theme={window.client.settings.darkTheme ? 'mush-dark' : 'mush-light'}
+                theme={window.client.settings.darkCodeTheme ? 'mush-dark' : 'mush-light'}
                 value={item.text}
                 onChange={this.changeText}
                 wrapEnabled={!window.client.mobile}

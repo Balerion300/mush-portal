@@ -19,16 +19,7 @@ client.connect();
 //  client.changeSetting('invertHighlight', true);
 //}
 
-client.theme = client.createTheme({
-  typography: {
-    useNextVariants: true,
-  },
-  palette: {
-    primary: client.colors.indigo,
-    secondary: client.colors.blueGrey,
-    type: 'dark',
-  },
-});
+client.theme = client.createTheme();
 client.react.portal.updateTheme(client.theme);
 
 

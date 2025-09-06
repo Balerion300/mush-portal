@@ -174,7 +174,7 @@ class Upload extends React.Component {
           ref={this.editor}
           mode="mushcode"
           width="100%"
-          theme={window.client.settings.darkTheme ? 'mush-dark' : 'mush-light'}
+          theme={window.client.settings.darkCodeTheme ? 'mush-dark' : 'mush-light'}
           value={text}
           onChange={this.changeText}
           readOnly={uploading}

@@ -195,7 +195,7 @@ class Settings extends React.Component {
       sidebarOpen, sidebarAnchor, sidebarAlwaysShow, sidebarShowPlayers, fontFamily, fontSize, activityReposition,
       recallButtons, recallAnchor, recallSize, mobileFontSize, terminalWidth, timersAutoStart, activityEnabled,
       sidebarShowThings, sidebarShowExits, sidebarShowCompass, sidebarDense,
-      timersEnabled, terminalAutoScroll, showLocalEcho, darkTheme
+      timersEnabled, terminalAutoScroll, showLocalEcho, darkCodeTheme, darkTheme
     } = this.state;
     const isMobile = window.client.mobile;
    
@@ -334,15 +334,29 @@ class Settings extends React.Component {
       </List>
     );
         
+    var uiTheme = (
+      <List className={classes.list} disablePadding dense>
+        <ListItem dense>
+          <ListItemIcon>
+            <PaletteIcon />
+          </ListItemIcon>
+          <ListItemText className={classes.switchText} primary="Dark UI theme" />
+          <ListItemSecondaryAction>
+            <Switch checked={darkTheme} value="darkTheme" onChange={this.handleSwitch('darkTheme')} />
+          </ListItemSecondaryAction>
+        </ListItem>
+      </List>
+    );
+
     var editorTheme = (
       <List className={classes.list} disablePadding dense>
         <ListItem dense>
           <ListItemIcon>
             <CodeIcon />
           </ListItemIcon>
-          <ListItemText className={classes.switchText} primary="Use dark code editor theme?" />
+          <ListItemText className={classes.switchText} primary="Dark code editor theme" />
           <ListItemSecondaryAction>
-            <Switch checked={darkTheme} value="darkTheme" onChange={this.handleSwitch('darkTheme')} />
+            <Switch checked={darkCodeTheme} value="darkCodeTheme" onChange={this.handleSwitch('darkCodeTheme')} />
           </ListItemSecondaryAction>
         </ListItem>
       </List>
@@ -685,6 +699,15 @@ class Settings extends React.Component {
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails classes={{ root: classes.noPadding }}>
                   {color}
+                </ExpansionPanelDetails>
+              </ExpansionPanel>
+
+              <ExpansionPanel className={classes.panel} expanded={expandAll || expanded === 'uiTheme'} onChange={this.handleExpand('uiTheme')}>
+                <ExpansionPanelSummary classes={{ root: classes.noPadding }} expandIcon={<ExpandMoreIcon />}>
+                  <Typography className={classes.summaryText}>UI Theme</Typography>
+                </ExpansionPanelSummary>
+                <ExpansionPanelDetails classes={{ root: classes.noPadding }}>
+                  {uiTheme}
                 </ExpansionPanelDetails>
               </ExpansionPanel>
 

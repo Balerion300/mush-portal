@@ -84,11 +84,9 @@ class Client {
    * @constructor
    */
   constructor() {
-    // Client colors and theme
+    // Client colors
     this.colors = Colors;
-    this.theme = this.createTheme();
-    this.mobile = !window.matchMedia(this.theme.breakpoints.up('md').substring(7)).matches;
-    
+
     // client settings
     this.defaultSettings = {
       // font
@@ -181,9 +179,11 @@ class Client {
     this.loadKeys();
     this.loadCSS();
     this.loadScripts();
-    
+
     // must come after client .css definitions
     this.loadSettings();
+    this.theme = this.createTheme();
+    this.mobile = !window.matchMedia(this.theme.breakpoints.up('md').substring(7)).matches;
     
     // Terminal UI elements
     this.output = null;

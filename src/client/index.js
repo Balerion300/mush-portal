@@ -84,11 +84,9 @@ class Client {
    * @constructor
    */
   constructor() {
-    // Client colors and theme
+    // Client colors
     this.colors = Colors;
-    this.theme = this.createTheme();
-    this.mobile = !window.matchMedia(this.theme.breakpoints.up('md').substring(7)).matches;
-    
+
     // client settings
     this.defaultSettings = {
       // font
@@ -99,6 +97,8 @@ class Client {
       ansiBG: 'ansi-40',
       invertHighlight: false,
       // code editor theme
+      darkCodeTheme: true,
+      // overall UI theme
       darkTheme: true,
       // terminal settings
       terminalWidth: 100,
@@ -179,9 +179,11 @@ class Client {
     this.loadKeys();
     this.loadCSS();
     this.loadScripts();
-    
+
     // must come after client .css definitions
     this.loadSettings();
+    this.theme = this.createTheme();
+    this.mobile = !window.matchMedia(this.theme.breakpoints.up('md').substring(7)).matches;
     
     // Terminal UI elements
     this.output = null;
@@ -421,7 +423,7 @@ class Client {
       palette: {
         primary: this.colors.indigo,
         secondary: this.colors.blueGrey,
-        type: 'dark',
+        type: this.settings.darkTheme ? 'dark' : 'light',
       },
     };
     
@@ -644,7 +646,10 @@ class Client {
       //this.sendText("SCREENWIDTH " + this.settings.terminalWidth);
       //this.sendText("SCREENHEIGHT " + Math.floor(this.output.root.parentNode.clientHeight / this.output.dims.height));
     } else if (key === 'darkTheme') {
-      const theme = `ace/theme/${this.settings.darkTheme ? 'mush-dark' : 'mush-light'}`;
+      this.theme = this.createTheme();
+      this.react.portal && this.react.portal.updateTheme(this.theme);
+    } else if (key === 'darkCodeTheme') {
+      const theme = `ace/theme/${this.settings.darkCodeTheme ? 'mush-dark' : 'mush-light'}`;
       this.react.upload && this.react.upload.editor.current.editor.setTheme(theme);
       this.react.backup && this.react.backup.editor.current.editor.setTheme(theme);
       this.react.formEditor && this.react.formEditor.editor.current.editor.setTheme(theme);
